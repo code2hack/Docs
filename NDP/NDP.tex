@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{xeCJK}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=single,                                          % 不显示背景边框
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+\newcommand{\page}[2]{\hyperlink{#1.pdf.#2}{link}}
+
+
+
+\title{Near-Data Processing}
+\date{}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+\part{文献}
+
+
+%\includepdf[pages=-]{.pdf}
+\end{document}
