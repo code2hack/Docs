@@ -16,20 +16,28 @@
  showstringspaces=false,                              % 不显示字符串中的空格
  language=c++,                                        % 设置语言
 }
-%\newcommand{\page}[2]{\hyperlink{#1.pdf.#2}{link}}
-
+\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
+\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
 
 
 \title{Near-Data Processing}
+\author{陈辉}
 \date{}
 \begin{document}
-
 \maketitle
-
 \tableofcontents
 \newpage
 \part{文献}
+\section{\textit{Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning}}
+\paper{Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning}{1}
+\section{\textit{NEAR-DATA-PROCESSING-FOR-MACHINE-LEARNING}}
+\paper{NEAR-DATA-PROCESSING-FOR-MACHINE-LEARNING}{1}
+
+\includepdf[link=true,pages=-,fitpaper]{./papers/Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning.pdf}
 
 
-%\includepdf[pages=-]{.pdf}
+
+%\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
+%\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
+
 \end{document}
