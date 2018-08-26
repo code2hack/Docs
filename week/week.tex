@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{xeCJK}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=single,                                          % 不显示背景边框
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+\newcommand{\page}[2]{\hyperlink{#1.pdf.#2}{link}}
+
+
+
+\title{\vspace{-4cm}周工作汇报}
+\author{陈辉}
+\begin{document}
+\maketitle
+\section{本周工作}
+\subsection*{文献阅读}
+\begin{enumerate}
+\item \textit{Near-Data Processing for Machine Learning}\\
+NDP方法在机器学习中的应用探索，主要思想是将SGD算法部署在智能SSD上.
+\item \textit{Evolution Strategies as a Scalable Alternative to Reinforcement Learning}\\
+OpenAI小组将进化策略应用到增强学习中进行训练，主要特点
+\begin{itemize}
+\item 可并行性极佳
+\item 训练效率高
+\item 鲁棒性好
+\\
+(这篇文章难度较大，还未深入)
+
+\end{itemize}
+
+\end{enumerate}
+\section{下步工作计划}
+主要思路：\\
+当前主流使用GPU对神经网络进行训练，对于深度神经网络、海量训练集的训练效率不理想，瓶颈可能在于（直观分析有待考证）：1.受限于GPU显存限制，需要频繁的GPU-内存-硬盘的数据交换。2.简单地叠加GPU阵列并不能有效地提升训练效率.\\
+尝试将OpenAI提出的进化策略（或者考虑遗传算法）部署在存储端进行。例如对CPU-FPGA(arm)-SSD这样的架构进行大规模扩展，如果最终性能可以接近于线性提升，我认为可以取代目前CPU-GPU的模式。
+
+\subsection{机器学习方向}
+\begin{enumerate}
+\item 学习进化策略、遗传算法等，搜集相关资料研究将其应用于当前主流神经网络训练的可行性
+\item 学习当前随机梯度下降算法与变种 
+\end{enumerate}
+
+\subsection{NDP方向}
+\begin{enumerate}
+\item 进一步阅读有关Near-Data Processing和In-Storage Compute的文章
+\item 搜集资料以进一步分析基于NDP作海量数据训练的可行性
+\item 寻找是否有较成熟的NDP平台架构
+\item 复习体系结构相关知识
+\end{enumerate}
+%\includepdf[pages=-]{.pdf}
+\end{document}
