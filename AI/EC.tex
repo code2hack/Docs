@@ -48,8 +48,28 @@
 \paragraph{What PBT can do}
 
 \subsection{Related Work}
+\paragraph{Bayesian optimisation framework}
+\paragraph{Main thoughts of PBT for training}A misture way: Parameters are more likely to be trained(partially) in standard way, while the hyperparameters are evolved(relatively slowly).
+
+\subsection{Population Based Training}
+\paragraph{Main idea}
+\begin{itemize}
+\item Training with a population that each member has different parameters and hyper parameters.
+\item In each iteration, a member takes steps and offer its weights, hyperparameters and evaluation. This is the main \textbf{communication} among members.
+\item Each member \textbf{\textit{exploit}} the best weights and hyperparameters among the whole polulation, then \textbf{\textit{explore}} new branches for next step.
+\end{itemize}
+\textbf{Remark. }Can we treat objective function as a \textbf{hyperparameter} too?\\
+e.g. With the improvement of models, can we eventually decrease the size of the batches for evaluation computing?\\
 
 
+\subsection{Experiments}
+\subsubsection{Deep Reinforcement Learning}
+
+\subsubsection{Machine Translation}
+
+\section{\textit{Evolution Strategies as a Scalable Alternative to Reinforcement Learning}}
+\book{Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning}{1}\\
+\textbf{Remark. }Someone pointed out that this paper is similar to \href{https://en.wikipedia.org/wiki/Simultaneous\_perturbation\_stochastic\_approximation}{SPSA}
 
 
 
@@ -61,6 +81,7 @@
 
 
 \includepdf[link=true,pages=-,fitpaper]{./papers/Population-Based-Training-of-Neural-Networks.pdf}
+\includepdf[link=true,pages=-,fitpaper]{./papers/Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning.pdf}
 \includepdf[link=true,pages=-,fitpaper]{./papers/Simple-Evolutionary-Optimization-Can-Rival-Stochastic-Gradient-Descent-in-Neural-Networks.pdf}
 %\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
 %\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
