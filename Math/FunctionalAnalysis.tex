@@ -26,15 +26,15 @@
 
 \newcounter{topic}[subsection]
 \newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily {\medskip}
 \newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{end{em} \medskip}
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
 \newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily \begein{em}}{\end{em} \medskip}
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 
 
 
@@ -51,6 +51,7 @@
 
 \book{18}
 \begin{defi}{Metric space,metric}
+
 \end{defi}
 
 \begin{exam}{Real line R}
