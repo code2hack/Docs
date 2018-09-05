@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{unicode-math}
+\numberwithin{equation}{subsection}
 %\usepackage{amsthm}
 \usepackage{pdfpages}
 \usepackage{xeCJK}
@@ -25,18 +27,19 @@
 
 
 \newcounter{topic}[subsection]
-\newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
-\newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{end{em} \medskip}
-\newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily \begein{em}}{\end{em} \medskip}
-\newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+\newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Definition~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{theo}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~} \rmfamily }{\medskip}
+\newenvironment{coro}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{lemm}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 \newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Example~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 
-
+\newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 
 
 \title{<++>}

@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{unicode-math}
+\numberwithin{equation}{section}
+%\usepackage{amsthm}
+\usepackage{pdfpages}
+\usepackage{xeCJK}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=single,                                          % 不显示背景边框
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
+
+\newcommand{\book}[1]{\href[page=#1]{./books/Measures-Integrals-and-Martingales.pdf}{(P#1)}}
+%\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
+%\newcommand{\b1}[1]{\book{FA}{#1}}
+
+
+\newcounter{topic}[section]
+\newenvironment{defi}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Definition~\thesection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{theo}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Theorem~\thesection.\thetopic~} \rmfamily }{\medskip}
+\newenvironment{coro}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Corollary~\thesection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{lemm}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Lemma~\thesection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{exam}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Example~\thesection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{rema}{\refstepcounter{topic}\label{\thesection.\thetopic}\par\medskip
+   \noindent \textbf{Remark~\thesection.\thetopic~} \rmfamily }{ \medskip}
+
+
+
+
+\title{Measure Theory}
+\author{陈辉}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Prologue}
+
+\defi{$\sigma -additivity$}
+\begin{equation}
+area ( \bigcupdot_{j \in N} A_j ) = \sum_{j \in N} area(A_j)
+\label{eq:1.9}
+\end{equation}
+
+\section{The pleasures of counting}
+\begin{lemm}
+$f:X \rightarrow Y$ is injective iff $f(A \cap B)=f(A) \cap f(B)$ for all $A,B \subset X$
+\end{lemm}
+
+\begin{lemm}
+$f:X \rightarrow Y$ is injective iff $f(X \backslash A)=f(X) \backslash f(A)$ for all $A \subset X$
+\end{lemm}
+
+
+
+\end{document}

@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{verbatim}
 \usepackage{amsmath}
 \usepackage{pdfpages}
 \usepackage{xeCJK}
@@ -27,14 +28,39 @@
 \maketitle
 \tableofcontents
 \newpage
-名词索引：\\
-\hyperlink{}
 \part{文献}
+\section{\textit{Cloud-Scale-Acceleration-Architecture}}
+\paper{Cloud-Scale-Acceleration-Architecture}{1}
+\subsection{Introduction}
+\textbf{Balance of Homogeneity and Specialization}\par
+Specialized accelerator should be programmable to adjust the diversity of cloud servers and rapid change. That's why we need FPGAs or GPUs.\\
 
-\section{\textit{Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning}}
-\paper{Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning}{1}
-\section{\textit{NEAR-DATA-PROCESSING-FOR-MACHINE-LEARNING}}
-\paper{NEAR-DATA-PROCESSING-FOR-MACHINE-LEARNING}{1}
+This paper describes a cloud-scale FPGA-based acceleration architecture called \textit{Configurable Cloud} which allows datapath of cloud communication to be accelerated with FPGAs. This datapath can include networking flows, \textbf{storage flows}, security operations and distributed applications.\\
+
+We use a protocol called \textbf{LTL(Lightweight Transport Layer)} to make the remote FPGA resources apper closer than either a single local SSD access or the time to get through the host's networking stack.\\
+
+\subsection{Hardware Architecture}
+\textbf{Designing Requirements}
+\begin{itemize}
+\item Homogeneity.
+\item Fungibility.
+\item Flexibility.
+
+\begin{itemize}
+\item \textit{Local compute acceleration(through PCIe)}.
+Local acceleration handles \textbf{hight-value scenarios} such as search rankingon each FPGA's host. 
+\item \textit{Network acceleration.} 
+e.g. intrusion detection, deep packet inspection and network encryption.
+\item \textit{Global application acceleration(through FPGA pools)}. Through this, idle FPGAs can be used for distributed large-scale applications such as machine learning.
+\end{itemize}
+
+\item \textbf{Physical restrictions}. e.g. physical space, power consumption, and temperature. That's \textbf{why we choose FPGAs instead of GPUs}.
+\end{itemize}
+
+
+
+
+
 \section{\textit{Practical-Near-Data-Processing-for-In-memory-Analytics-Frameworks}}
 See paper\paper{Practical-Near-Data-Processing-for-In-memory-Analytics-Frameworks}{1}
 See presentation\paper{Practical-Near-Data-Processing-for-In-memory-Analytics-Frameworks(Presentation)}{1}
@@ -44,11 +70,8 @@ See presentation\paper{Practical-Near-Data-Processing-for-In-memory-Analytics-Fr
 
 
 
-\includepdf[link=true,pages=-,fitpaper]{./papers/Evolution-Strategies-as-a-Scalable-Alternative-to-Reinforcement-Learning.pdf}
-\includepdf[link=true,pages=-,fitpaper]{./papers/NEAR-DATA-PROCESSING-FOR-MACHINE-LEARNING.pdf}
+\includepdf[link=true,pages=-,fitpaper]{./papers/Cloud-Scale-Acceleration-Architecture.pdf}
 \includepdf[link=true,pages=-,fitpaper]{./papers/Practical-Near-Data-Processing-for-In-memory-Analytics-Frameworks.pdf}
-\includepdf[link=true,pages=-,fitpaper]{./papers/Practical-Near-Data-Processing-for-In-memory-Analytics-Frameworks(Presentation).pdf}
-
 %\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
 %\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
 

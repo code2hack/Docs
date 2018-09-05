@@ -25,8 +25,8 @@
 
 
 \newcounter{topic}[subsection]
-\newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily {\medskip}
+\newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\medskip
+   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily} {\medskip}
 \newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
 \newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
@@ -51,16 +51,34 @@
 
 \book{18}
 \begin{defi}{Metric space,metric}
-
+A \textit{metric space} is a pair $(X,\textit{d})$ where X is a set and $d:X \times X \rightarrow R $ 
+\begin{enumerate}
+\item d is real-valued, finite and nonnegative.
+\item $d(x,y)=0$ iff x=y.
+\item $d(x,y)=d(y,x)$
+\item $d(x,y) \leq d(x,z)+d(z,y)$ (\textbf{Triangle inequality}).
+\end{enumerate}
 \end{defi}
-
-\begin{exam}{Real line R}
-
+\textbf{Examples}\\
+\setcounter{topic}{5}
+\begin{exam}{Sequence space $l^{\infty}$}
+\begin{itemize}
+\item $x=(\xi_j)$
+\item $|\xi_j| \leq c_x$, where $c_x$ is a real number may depend on x, but not on j.
+\item $d(x,y)=\sup_{j \in N} |\xi_j - \eta_j|$
+\end{itemize}
+\end{exam}
+\begin{exam}{Function space C[a,b]}
+X is the set of all real-valued functions defined on closed interval $J=[a,b]$ and\\
+\begin{equation*}
+d(x,y)=\max_{t \in J} |x(t) - y(t)|,
+\end{equation*}
 \end{exam}
 
 \subsection{Further Examples of Metric Spaces}
 \book{24}
 \begin{exam}{Sequence space s}
+In contrast with \ref{1.1.6},
 \end{exam}
 
 \subsection{Open Set, Closed Set, Neighborhood}
@@ -68,7 +86,6 @@
 Given a point $x_0 \in X$ and a real number $r \geq$.
 \end{defi}
 
-\ref{1.1.2}
 %\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
 
 

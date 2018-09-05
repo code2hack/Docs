@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{amsmath}
+\numberwithin{equation}{subsection}
 %\usepackage{amsthm}
 \usepackage{pdfpages}
 \usepackage{xeCJK}
@@ -19,32 +20,38 @@
 }
 \newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
 
-\newcommand{\book}[1]{\href[page=#1]{./books/<++>.pdf}{(P#1)}}
+\newcommand{\book}[1]{\href[page=#1]{./books/Durrett-Probability-theory-and-examples.pdf}{(P#1)}}
 %\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
 %\newcommand{\b1}[1]{\book{FA}{#1}}
 
 
 \newcounter{topic}[subsection]
 \newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{end{em} \medskip}
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
 \newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily \begein{em}}{\end{em} \medskip}
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily \begin{em}}{\end{em} \medskip}
+   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 
 
 
 
-\title{<++>}
+\title{Probability Theory and Examples by Durrett}
 \author{陈辉}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
+
+\section{Measure Theory}
+\paragraph{\textbf{Probability Space}}A triple $(\Omega,\mathcal{F},P)$ where $\Omega$ is a set of ''outcomes'', $\mathcal{F}$ is a set of 'events' and, a $\sigma$-filed, that is a nonempty collection of subsets of $\Omega$:\\
+
+
+\textbf{$\sigma$-field}\par
 
 \end{document}
