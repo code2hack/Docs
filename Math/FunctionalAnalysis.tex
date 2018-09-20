@@ -1,5 +1,8 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{unicode-math}
 %\usepackage{amsthm}
 \usepackage{pdfpages}
 \usepackage{xeCJK}
@@ -35,6 +38,9 @@
    \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
 \newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
+\newenvironment{rema}[1]{\par\medskip
+   \noindent \textbf{Remark}~\rmfamily }{ \medskip}
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 
 
 
@@ -82,11 +88,32 @@ In contrast with \ref{1.1.6},
 \end{exam}
 
 \subsection{Open Set, Closed Set, Neighborhood}
-\begin{defi}{Open Set}
-Given a point $x_0 \in X$ and a real number $r \geq$.
+\begin{defi}{Ball and sphere}
 \end{defi}
 
-%\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
+\begin{defi}{Open set, closed set}
+A subset M of a metric space is \textit{open} if it contains a ball about each of its points. A subset K is closed if $K^c = X - K$ is open.
+\end{defi}
 
+\begin{rema}
+\textbf{(Topological Space)}
+For the collection of all the open subsets of X called $\mathscr{T}$ :
+\begin{itemize}
+\item (T1) $\emptyset \in \mathscr{T}, X \in \mathscr{T}$.
+\item (T2) The union of \textbf{any} members of $\mathscr{J}$ is a member of $\mathscr{J}$.
+\item (T3) The intersection of \textbf{finitely} many members of $\mathscr{J}$ is a member of it.
+\end{itemize}
+\end{rema}
+
+\begin{defi}
+{Continuous mapping}
+For $X=(X,d)~and~Y=(Y,\tilde{d})$, $T: X \longrightarrow Y$ is continuous at point $x_0$ if for every $\epsilon >0$ there's a $\delta >0$ such that
+\end{defi}
+
+\begin{theo}
+{Continuous mapping}
+A mapping $T: X \longrightarrow Y$ is continuous iff \textbf{the inverse image of any open subset of Y is an open subset of X}.
+\end{theo}
 
 \end{document}
+%\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}

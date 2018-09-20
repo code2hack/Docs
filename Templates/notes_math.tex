@@ -1,5 +1,8 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+
 \usepackage{unicode-math}
 \numberwithin{equation}{subsection}
 %\usepackage{amsthm}
@@ -40,7 +43,7 @@
 
 \newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
-
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 
 \title{<++>}
 \author{陈辉}
