@@ -133,8 +133,58 @@ The set of mechanisms for interprocess communication(IPC):
 \subsection{Signals}
 Signals are often described as ``software interrupts''
 \subsection{Threads}
+Threads \textbf{share}
+\begin{itemize}
+\item Text(for program codes).
+\item Data.
+\item Heap.
+\item virtual memory.
+\item global variables.(for communication)
+\end{itemize}
+Threads \textbf{differ in}
+\begin{itemize}
+\item Stack.
+\item local variables.
+\item function call linkage information(why?).
+\end{itemize}
+Threads' \textbf{advantages}
+\begin{itemize}
+\item easy to share data rather than multiprocesses.
+\item good for parallel processing
+\end{itemize}
 
+\subsection{Process Groups and Shell Job Control}
+\subsection{Sessions, Controlling Terminals, and Controlling Processes}
+\subsection{Pseudoterminals}
+A pseudoterminal is a \textbf{pair of connected virtual devices} known as \textbf{master and slave}.\\
+Master drives the user program and slave drives terminal-oriented program. This connection is like a bridge. e.g. \textit{telnet and ssh}.
+\subsection{Date and Time}
+\begin{itemize}
+\item \textit{Realtime}.
+\item \textit{Process time}.
+\end{itemize}
 
+\subsection{Client-Server Architecture}
+\subsection{Realtime}
+\href{https://www.cl.cam.ac.uk/~mgk25/linux-posix.1b.txt}{POSIX.1b}:
+\subsection{The /proc File System}
+A virtual file system that provide an \textbf{interface to kernel data structures}.
+
+\section{System Programming Concepts}
+
+\subsection{System Calls}
+\book{87}
+\subsection{Library Functions}
+\subsection{The standard C Library; The GNU C Library(glibc)}
+\subsection{Handling Errors from System Calls and Library Functions}
+
+\subsection{Notes on the Example Programs in this book}
+
+\subsubsection{Command-Line Options and Arguments}
+\subsubsection{Common Functions and Header Files}
+\book{95}
+
+\subsection{Portability Issues}
 
 
 
