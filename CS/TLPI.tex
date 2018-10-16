@@ -194,6 +194,68 @@ Keypoints:
 \end{itemize}
 
 \subsection{Overview}
+Key word:\textit{file descriptor}
+
+
+\setcounter{section}{40}
+\section{Fundamentals of Shared Libraries}
+
+\subsection{Object Libraries}
+\book{833}
+\textbf{Object Library}: A set of object files.\\
+\subsection{Static Libraries(archives)}
+\subsubsection*{Creating and maintaining a static library}
+Syntax:
+\begin{lstlisting}
+\$ ar \textit{options archive object-files}
+\end{lstlisting}
+\textbf{Conventional form of static libraries}: lib\textit{name}.a.
+\begin{lstlisting}
+	\$ gcc -g -c mod1.c mod2.c
+	\$ ar r libdemo.a mod1.o mod2.o
+	\$ rm mod1.o mod2.o
+\end{lstlisting}
+Delete modules from the archive:
+\begin{lstlisting}
+	\$ ar d libdemo.a mod2.o
+\end{lstlisting}
+
+\subsubsection*{Using a static library}
+Basic way:
+\begin{lstlisting}
+\$ gcc -g -c prog.c
+\$ gcc -g -o prog prog.o libdemo.a
+\end{lstlisting}
+Alternative way:
+\begin{lstlisting}
+\$ gcc -g -o prog prog.o -ldemo
+\end{lstlisting}
+'-ldemo' means '-l' and archive without lib prefix and .a suffix which resides in one of the standard directories(e.g. /usr/lib)
+
+\subsection{Overview of Shared Libraries}
+\subsection{Creating and Using Shared Libraries}
+\textbf{ELF(Executable and Linking Format shared libraries)}:ELF is the format employed for executables and shared libraries on modern linux.
+\subsubsection{Creating a Shared Library}
+\begin{lstlisting}
+\$ gcc -g -c -fPIC -Wall mod1.c mod2.c mod3.c
+\$ gcc -g -o -shared -o libfoo.so mod1.o mod2.o mod3.o
+\end{lstlisting}
+\textbf{Remark.} Unlike static libraries, object modules cannot be add or deleted from previously built shared library(why?)\\
+\subsubsection{Position-Independent Code}
+\textit{-fPIC} specifies that the compiler generate position-independent code.
+How to check whether an object file has been compiled with \textit{-fPIC}\book{882}
+
+\subsubsection{Using a Shared Library}
+Two main steps to utilize shared library:
+\begin{itemize}
+\item Embedding the name of the shared library inside the executable during linking.
+\item Resolving the embedding library name: performed by \textit{dynamic linker}, named \textbf{/lib/ld-linux.so.2}.
+\end{itemize}
+\textbf{The LD\_LIBRARY\_PATH} enveironment variable. \book{840}
+
+\subsubsection{The Shared Library Soname}
+
+
 
 
 \end{document}
