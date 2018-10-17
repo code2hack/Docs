@@ -1,0 +1,264 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\usepackage{xeCJK}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=single,                                          % 不显示背景边框
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
+\newcommand{\book}[1]{\href[page=#1]{./books/TLPI.pdf}{(P#1)}}
+
+
+\title{The Linux Programming Interfaces}
+\author{陈辉}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{History and Standards}
+\section{Fundamental Concepts}
+\subsection{The Kernel}
+\subsection{The Shell}
+\subsection{Users and Groups}
+\subsubsection*{Users}
+\begin{itemize}
+\item \textit{login name}
+\item \textit{user ID(UID)}
+\item \textit{Group ID}
+\item \textit{Home directory}
+\item \textit{Login shell}:the name of the program to be executed to interpret user commands.
+\end{itemize}
+These information of each user resides in \textit{password files}
+\subsubsection*{Groups}
+\subsubsection*{Superuser}
+userID = 0.
+\subsection{Single Directory Hierarchy, Directories, Links, and Files}
+Figure of single directory hierarchy.\book{71}
+\subsubsection*{FIle Types}
+\textit{The other file types}:\\
+devices, pipes, sockets, directories, and symbolic links.
+\subsubsection*{Directories and links}
+The links between directories establish the directory hierarchy.
+\subsubsection*{Symbolic links}
+\subsubsection*{Pathnames}
+\begin{itemize}
+\item \textit{absolute pathname}
+\item \textit{relative pathname}
+\end{itemize}
+
+\subsection{File I/O Model}
+\par\textit{universality of I/O}:The same system calls(\textit{open,read,write,close}) are used to perform I/O on \textbf{all types of files}.
+\subsubsection*{File descriptors}
+A nonnegative integer obtained by a call to \textit{open()}.\\
+Often 0 for input, 1 for output and 2 for errors or other abnormal messages.
+\subsection{Programs}
+\subsubsection*{Filters}
+\subsubsection*{Command-line arguments}
+
+\subsection{Processes}
+\subsubsection*{Process memory layout}
+\textit{segments}:
+\begin{itemize}
+\item \textit{Text}
+\item \textit{Data}
+\item \textit{Heap}
+\item \textit{Stack}
+\end{itemize}
+
+\subsubsection*{Process creation and execution}
+\textit{fork()}:\\
+The kernel creates the child process by making a duplicate of the parent process which inherits copies of parent's \textbf{data, stack, heap}. The text is placed in memory marked read-only shared by them.\\
+\textit{execve()}:\\
+child call execve() system calls to replace the origin segments with new target program.
+
+\subsubsection*{Process ID and parent process ID}
+\subsubsection*{Process termination and termination status}
+child call \textit{\_exit()} or be killed by a signal.\\
+parent \textit{wait()} for child's \textit{termination status}.
+\subsubsection*{Process user and group identifiers}
+\begin{itemize}
+\item \textit{Real user ID and real group ID}
+\item \textit{Effective user ID and effective group ID}
+\item \textit{Supplementary group IDs}
+\end{itemize}
+
+\subsubsection*{The \textit{init} process}
+The \textit{init} is the parent of all processes with a constant PID = 1.\\
+
+\subsubsection*{Daemon processes}
+background
+\subsubsection*{Environment list}
+
+\subsection{Memory Mappings}
+\textit{mmap()}:
+
+
+
+
+\subsection{Static and Shared Libraries}
+\subsubsection*{Static libraries}
+A static library is essentially a structured bundle of compiled object modules. To use functions from it we specify that library in the \textbf{link} command used to \textbf{build} a program.
+\subsubsection*{Shared libraries}
+Shared libraries were designed to address the wasting problems with static libraries.
+\begin{itemize}
+\item While building: the linker writes a record into the executable.
+\item While runtime: \textit{dynamic linker} ensures the required shared libraries are found and loaded to the memory.
+\end{itemize}
+
+\subsection{Interprocess Communication(IPC) and Synchronization}
+The set of mechanisms for interprocess communication(IPC):
+\begin{itemize}
+\item \textit{signals}
+\item \textit{pipes}
+\item \textit{sockets}
+\item \textit{file locking}
+\item \textit{message queues}
+\item \textit{semaphores}
+\item \textit{shared memory}
+\end{itemize}
+
+\subsection{Signals}
+Signals are often described as ``software interrupts''
+\subsection{Threads}
+Threads \textbf{share}
+\begin{itemize}
+\item Text(for program codes).
+\item Data.
+\item Heap.
+\item virtual memory.
+\item global variables.(for communication)
+\end{itemize}
+Threads \textbf{differ in}
+\begin{itemize}
+\item Stack.
+\item local variables.
+\item function call linkage information(why?).
+\end{itemize}
+Threads' \textbf{advantages}
+\begin{itemize}
+\item easy to share data rather than multiprocesses.
+\item good for parallel processing
+\end{itemize}
+
+\subsection{Process Groups and Shell Job Control}
+\subsection{Sessions, Controlling Terminals, and Controlling Processes}
+\subsection{Pseudoterminals}
+A pseudoterminal is a \textbf{pair of connected virtual devices} known as \textbf{master and slave}.\\
+Master drives the user program and slave drives terminal-oriented program. This connection is like a bridge. e.g. \textit{telnet and ssh}.
+\subsection{Date and Time}
+\begin{itemize}
+\item \textit{Realtime}.
+\item \textit{Process time}.
+\end{itemize}
+
+\subsection{Client-Server Architecture}
+\subsection{Realtime}
+\href{https://www.cl.cam.ac.uk/~mgk25/linux-posix.1b.txt}{POSIX.1b}:
+\subsection{The /proc File System}
+A virtual file system that provide an \textbf{interface to kernel data structures}.
+
+\section{System Programming Concepts}
+
+\subsection{System Calls}
+\book{87}
+\subsection{Library Functions}
+\subsection{The standard C Library; The GNU C Library(glibc)}
+\subsection{Handling Errors from System Calls and Library Functions}
+
+\subsection{Notes on the Example Programs in this book}
+
+\subsubsection{Command-Line Options and Arguments}
+\subsubsection{Common Functions and Header Files}
+\book{95}
+
+\subsection{Portability Issues}
+
+\section{File I/O}
+Keypoints:
+\begin{itemize}
+\item System call APIs to perform file I/O.
+\item File descriptor.
+\end{itemize}
+
+\subsection{Overview}
+Key word:\textit{file descriptor}
+
+
+\setcounter{section}{40}
+\section{Fundamentals of Shared Libraries}
+
+\subsection{Object Libraries}
+\book{833}
+\textbf{Object Library}: A set of object files.\\
+\subsection{Static Libraries(archives)}
+\subsubsection*{Creating and maintaining a static library}
+Syntax:
+\begin{lstlisting}
+\$ ar \textit{options archive object-files}
+\end{lstlisting}
+\textbf{Conventional form of static libraries}: lib\textit{name}.a.
+\begin{lstlisting}
+	\$ gcc -g -c mod1.c mod2.c
+	\$ ar r libdemo.a mod1.o mod2.o
+	\$ rm mod1.o mod2.o
+\end{lstlisting}
+Delete modules from the archive:
+\begin{lstlisting}
+	\$ ar d libdemo.a mod2.o
+\end{lstlisting}
+
+\subsubsection*{Using a static library}
+Basic way:
+\begin{lstlisting}
+\$ gcc -g -c prog.c
+\$ gcc -g -o prog prog.o libdemo.a
+\end{lstlisting}
+Alternative way:
+\begin{lstlisting}
+\$ gcc -g -o prog prog.o -ldemo
+\end{lstlisting}
+'-ldemo' means '-l' and archive without lib prefix and .a suffix which resides in one of the standard directories(e.g. /usr/lib)
+
+\subsection{Overview of Shared Libraries}
+\subsection{Creating and Using Shared Libraries}
+\textbf{ELF(Executable and Linking Format shared libraries)}:ELF is the format employed for executables and shared libraries on modern linux.
+\subsubsection{Creating a Shared Library}
+\begin{lstlisting}
+\$ gcc -g -c -fPIC -Wall mod1.c mod2.c mod3.c
+\$ gcc -g -o -shared -o libfoo.so mod1.o mod2.o mod3.o
+\end{lstlisting}
+\textbf{Remark.} Unlike static libraries, object modules cannot be add or deleted from previously built shared library(why?)\\
+\subsubsection{Position-Independent Code}
+\textit{-fPIC} specifies that the compiler generate position-independent code.
+How to check whether an object file has been compiled with \textit{-fPIC}\book{882}
+
+\subsubsection{Using a Shared Library}
+Two main steps to utilize shared library:
+\begin{itemize}
+\item Embedding the name of the shared library inside the executable during linking.
+\item Resolving the embedding library name: performed by \textit{dynamic linker}, named \textbf{/lib/ld-linux.so.2}.
+\end{itemize}
+\textbf{The LD\_LIBRARY\_PATH} enveironment variable. \book{840}
+
+\subsubsection{The Shared Library Soname}
+
+
+
+
+\end{document}
+
+%\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
+%\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
