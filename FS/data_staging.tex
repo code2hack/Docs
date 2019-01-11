@@ -4,6 +4,9 @@
 \usepackage{verbatim}
 \usepackage{xeCJK}
 \usepackage{hyperref}
+%\usepackage{apacite}
+\usepackage{natbib}
+\usepackage{grffile}
 \usepackage{listings}
 \lstset{
  columns=fixed,       
@@ -17,21 +20,36 @@
  showstringspaces=false,                              % 不显示字符串中的空格
  language=c++,                                        % 设置语言
 }
-\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
-\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
+\newcommand{\citeext}[2]{\href[page=#2]{./references/#1.pdf}{(P#2)}}
+\newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
 
-
-\title{Near-Data Processing}
+\title{Overview of Data Staging}
 \author{陈辉}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
-\section{Distributed-Storage-Algorithm-for-Geospatial-Image-Data-Based-on-Data-Access-Patterns}
+\section{\textit{SC'18:Stacker}}
+\subsection{Background}
+\subsubsection*{In-situ and In-transit Coupled Scientific Workflows}
+Something here 
+\citeint{
+\citeint{Stacker_an_autonomic_data_movement_engine_for_extreme-scale_data_staging-based_in-situ_workflows}{3}
+pointed out that
 
-\includepdf[link=true,pages=-,fitpaper]{./papers/Distributed-Storage-Algorithm-for-Geospatial-Image-Data-Based-on-Data-Access-Patterns.pdf}
+\bibliographystyle{plain}
+\bibliography{data_staging}
 
+\citeinclude{Stacker_an_autonomic_data_movement_engine_for_extreme-scale_data_staging-based_in-situ_workflows}
 \end{document}
-%\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
+
+
 %\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}

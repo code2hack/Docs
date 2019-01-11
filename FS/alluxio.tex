@@ -17,30 +17,52 @@
  showstringspaces=false,                              % 不显示字符串中的空格
  language=c++,                                        % 设置语言
 }
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
 \newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
 \newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
 
 
-\title{Log Analysis}
+\title{Alluxio}
 \author{陈辉}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
-\section{The Log: What every software engineer should know about real-time data's unifying abstraction}
-\href{https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying}{Blog here}
-\subsection{What is a log?}
+\section{Introduction}
+
+\subsection{Challenges with the Existing Ecosystem}
 \begin{itemize}
-\item Record of ordering activities.
-\item Logs in databases: A database uses a log to write out information about the records they will be modifying, before applying the changes to all the various data structures it maintains.
-\item Logs in distributed systems:\textbf{State Machine Replication Principle:}
-
-If two identical, deterministic processes begin in the same state and get the same inputs in the same order, they will produce the same output and end in the same state.
-
+    \item Work Duplication;
+    \item Data Duplication;
+    \item Performance;
+    \item Management and Administration.
 \end{itemize}
+
+%\subsection{Virtual Distributed File System}
+%VDFS mainly consists of \textbf{NAPIs} and \textbf{SAPIs}
+%\subsection{Results and Impacts Highlights}
+\setcounter{subsection}{3}
+\subsection{Alluxio Ecosystem}
+\subsection{Contributions}
+
+\section{Lineage in VDFS}
+Lineage circumvents the limitations of replication by \textbf{re-excuting the operations that created the output.}
+\par
+Challenges:
+\begin{itemize}
+        \item \textit{bounding the recomputation cost for a long-running storage system}.
+        \item \textit{how to allocate resources for recomputation}
+\end{itemize}
+
+
 \end{document}
+
+\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
 %\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}
 %\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
-
-
