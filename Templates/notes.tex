@@ -1,5 +1,10 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{unicode-math}
+\numberwithin{equation}{subsection}
+
 \usepackage{pdfpages}
 \usepackage{verbatim}
 \usepackage{xeCJK}
@@ -26,29 +31,67 @@
     filecolor=magenta,
     urlcolor=cyan,
 }
+%--------Commands for local pdf reference------%
 \newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
 \newcommand{\citeext}[2]{\href[page=#2]{./references/#1.pdf}{(P#2)}}
 \newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+%--------Environments for math------------%
+\newcounter{topic}[subsection]
+\newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Definition~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{theo}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~} \rmfamily }{\medskip}
+\newenvironment{coro}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{lemm}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Example~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 
-\title{Overview of Data Staging}
+\newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\title{Overview of Reinforcement Learning}
 \author{陈辉}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
-\section{\textit{SC'18:Stacker}}
+
+\section{Playing Atari with Deep Reinforcement Learning}
+\subsection{Introduction}
 \subsection{Background}
-\subsubsection*{In-situ and In-transit Coupled Scientific Workflows}
-Something here 
-\citeint{
-\citeint{Stacker_an_autonomic_data_movement_engine_for_extreme-scale_data_staging-based_in-situ_workflows}{3}
-pointed out that
+Basic denotes:
+\begin{align*}
+    \mathcal{E} &: \text{The environment.}\\
+    a_t &: \text{Actions at time t.}\\ 
+    x_t &: \text{Observations which are raw pixels.}\\
+    r_t &: \text{Rewards at time t.}\\
+\end{align*}
+Note that any rewards may depend on the whole prior sequence(or a long enough prior sequence). Thus we define:
+\begin{align*}
+        s_t &: = {x_1,a_1,\dots,a_{t-1},x_t}.\\
+\end{align*}
+And the future discounted return:
+\begin{equation*}
+        R_t = \sum_{t'=t}^T \gamma^{t'-t} r_{t'}
+\end{equation*}
+where T denotes the time-step at which the game terminates.\\
+Thus we have the optimal action-value function:
+\begin{equation*}
+        Q^*(s,a)= \max_{\pi} \mathds{E}_{s'\sim\mathcal{E}}R_t
+\end{equation*}
+
+
+
+
 
 \bibliographystyle{plain}
-\bibliography{data_staging}
+%\bibliography{overview_RL}
 
-\citeinclude{Stacker_an_autonomic_data_movement_engine_for_extreme-scale_data_staging-based_in-situ_workflows}
+%\citeinclude{Playing_Atari_with_Deep_Reinforcement_Learning}
+%\citeinclude{Asynchronous_Methods_for_Deep_Reinforcement_Learning}
 \end{document}
 
 

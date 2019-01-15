@@ -1,10 +1,17 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{unicode-math}
 \numberwithin{equation}{subsection}
-%\usepackage{amsthm}
+
 \usepackage{pdfpages}
+\usepackage{verbatim}
 \usepackage{xeCJK}
 \usepackage{hyperref}
+%\usepackage{apacite}
+\usepackage{natbib}
+\usepackage{grffile}
 \usepackage{listings}
 \lstset{
  columns=fixed,       
@@ -18,40 +25,71 @@
  showstringspaces=false,                              % 不显示字符串中的空格
  language=c++,                                        % 设置语言
 }
-\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
-
-\newcommand{\book}[1]{\href[page=#1]{./books/Durrett-Probability-theory-and-examples.pdf}{(P#1)}}
-%\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
-%\newcommand{\b1}[1]{\book{FA}{#1}}
-
-
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+%--------Commands for local pdf reference------%
+\newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
+\newcommand{\citeext}[2]{\href[page=#2]{./references/#1.pdf}{(P#2)}}
+\newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+%--------Environments for math------------%
 \newcounter{topic}[subsection]
-\newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
-\newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
-\newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
-\newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
+\newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Definition~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{theo}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~} \rmfamily }{\medskip}
+\newenvironment{coro}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{lemm}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 \newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
+   \noindent \textbf{Example~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 
-
-
-
-\title{Probability Theory and Examples by Durrett}
+\newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\title{Overview of Reinforcement Learning}
 \author{陈辉}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
-
 \section{Measure Theory}
-\paragraph{\textbf{Probability Space}}A triple $(\Omega,\mathcal{F},P)$ where $\Omega$ is a set of ''outcomes'', $\mathcal{F}$ is a set of 'events' and, a $\sigma$-filed, that is a nonempty collection of subsets of $\Omega$:\\
+\subsection{Probability Spaces}
+\begin{defi}
+        A \textbf{Probability space} is a triple $(\omega, \mathcal{F}, P)$. Where $\mathcal{F}$ is a $\sigma$-\textbf{field}, that is, a nonempty collection of subsets of $\omega$ that satisfy:\\
+        (i) if $A \in \mathcal{F}$ then $A^c \in \mathcal{F}$\\
+        (ii) if $A_i \in \mathcal{F}$ is a countable sequence of sets then $\cup_i A_i \in \mathcal{F}$\\
+        Without P, $(\omega, \mathcal{F})$ is a \textbf{measurable space}, that we can define a nonnegative countably additive set function $\mu : \mathcal{F} \rightarrow R$ with:\\
+        (i) $\mu(A) \geq \mu(\emptyset) = 0$ for all $A \in \mathcal{F}$.\\
+        (ii) if $A_i \in \mathcal{F}$ is a countable sequence of disjiont sets, then
+        \begin{equation*}
+                \mu(\cup_i A_i) = \sum_i \mu(A_i)
+        \end{equation*}
+\end{defi}
 
 
-\textbf{$\sigma$-field}\par
 
+
+
+
+\setcounter{section}{5}
+\section{Markov Chains}
+\subsection{Definitions}
+
+
+
+
+\bibliographystyle{plain}
+%\bibliography{overview_RL}
+
+%\citeinclude{Playing_Atari_with_Deep_Reinforcement_Learning}
+%\citeinclude{Asynchronous_Methods_for_Deep_Reinforcement_Learning}
 \end{document}
+
+
+%\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}
