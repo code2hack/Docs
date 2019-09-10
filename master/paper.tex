@@ -1,6 +1,7 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{url}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -73,32 +74,24 @@ email address}
 \end{IEEEkeywords}
 
 \section{Introduction}
-Distributed file systems such as HDFS\cite{HDFS}, GlusterFS[], Ceph\cite{Ceph}, Lustre[] \textcolor{red}{etc}. have been widely deployed as back-end storage systems for parallel/distributed applications.
+Distributed file systems such as HDFS\cite{HDFS}, GlusterFS\cite{GlusterFS}, Ceph\cite{Ceph}, Lustre\cite{Lustre}, etc., have been widely deployed as back-end storage systems for parallel/distributed applications.
 with the data scale continuously increased, I/O access latency between computing nodes and storage servers has become one of the severest bottlenecks in this big data era.
 In order to narrow this performance gap, data caching/prefetching in file systems is one of the most well-known optimization techniques.
-Caches(burst buffers?) with non-volatile memories(NVMs) and solid state drives(SSDs) are placed at different levels of the I/O stack to hide network and disk latency.
+Caches with high throughput and low latency devices like non-volatile memories(NVMs) and solid state drives(SSDs) are placed at different levels of the I/O stack to hide network and disk latency.
 
-\textcolor{red}{Traditional methodoligies: mainly apllying spatial and temporal locality}
 For purpose of caching data from lower storage in predictable manner, access pattern detection is essential.
 Traditionally, spatial locality and temporal locality are most generally considered facts. 
 \textit{Readahead} is a basic mechanism implemented by most file systems\cite{WhyDoes} including linux kernel, which prefeches constant size of data from a opened file to the cache. 
 For workloads excuting sequential read, this approach benefits a lot due to the simple and definite pattern.
-Unfortunately, many applications especially sientific ones usually do not follow sequential behavior(\textcolor{yellow}{IO acceleration with patter detection}). 
-\textcolor{red}{How about small files workloads?}
-
-
-\textcolor{red}{Curently works}
-
-
-
-
-\textcolor{red}{Briefly introducing your work to address the drawbacks mentioned above.}
+Unfortunately, many applications especially sientific ones usually do not access files sequentially.
 
 The main contributions of this paper can be summerized as follow.
 \begin{itemize}
-    \item We design and implement a filename embedding model named path2vec, 
-    which traverses the user's whole directory and captures naming conventions and semantic relations among directories and files.
-    \item A tracing translator is inserted into GlusterFS's storage stack, which is able to collect file access histories and represent these histories as vectors.
+    \item We propose an approach to embedd the names of files or directories with Skipgram algorithm, 
+    mapping file/directory names to vectors, thus providing a quantitative way to analyze relations among files and directories.
+    \item For purpose of collecting I/O access history, we implement a trace translator into GlusterFS to monitor and trace specific I/O requests.
+    \item Base on the embedding mechanism mentioned above, we build a gated recurrent neural network to catch I/O access pattern and encode it with hidden states of the GRU.
+    We combine the hidden states with file vectors to build a file classifier, which dynamically decide whether a file should be cached or purged from the cache.
 
 \end{itemize}
 
