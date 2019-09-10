@@ -1,12 +1,20 @@
 \documentclass{article}
 \usepackage{amsmath}
-\usepackage{mathrsfs}
 \usepackage{amssymb}
+\usepackage{dsfont}
 \usepackage{unicode-math}
-%\usepackage{amsthm}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
 \usepackage{pdfpages}
+\usepackage{verbatim}
 \usepackage{xeCJK}
 \usepackage{hyperref}
+%\usepackage{apacite}
+\usepackage{natbib}
+\usepackage{grffile}
 \usepackage{listings}
 \lstset{
  columns=fixed,       
@@ -17,36 +25,49 @@
  numberstyle=\footnotesize\color{darkgray},           
  commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
  stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
- showstringspaces=false,                              % 不显示字符串中的空格
+ showstringspaces=true,                              % 显示字符串中的空格
  language=c++,                                        % 设置语言
 }
-\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
-
-\newcommand{\book}[1]{\href[page=#1]{./books/Introductory-Functional-Analysis-with-Applications.pdf}{(P#1)}}
-%\newcommand{\book}[2]{\href[page=#2]{./books/#1.pdf}{(P#2)}}
-%\newcommand{\b1}[1]{\book{FA}{#1}}
-
-
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+%--------Commands for local pdf reference------%
+\newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
+\newcommand{\citeext}[2]{\href[page=#2]{../references/#1.pdf}{(P#2)}}
+\newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+\newcommand{\book}[1]{\citeext{Introductory_Functional_Analysis_with_Applications}{#1}}
+%--------Commands/Operators for math------%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+%--------Environments for math------------%
 \newcounter{topic}[subsection]
 \newenvironment{defi}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\medskip
-   \noindent \textbf{Definition~\thesubsection.\thetopic~(#1)} \rmfamily} {\medskip}
-\newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
-\newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
-\newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
-\newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
-   \noindent \textbf{Example~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
-\newenvironment{rema}[1]{\par\medskip
-   \noindent \textbf{Remark}~\rmfamily }{ \medskip}
-\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\noindent \textbf{Definition~\thesubsection.\thetopic~(#1)}\par \rmfamily }{ \medskip}
 
+\newenvironment{theo}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+\noindent \textbf{Theorem~\thesubsection.\thetopic~(#1)} \rmfamily }{\medskip}
+
+\newenvironment{coro}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+\noindent \textbf{Corollary~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
+
+\newenvironment{lemm}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+\noindent \textbf{Lemma~\thesubsection.\thetopic~(#1)} \rmfamily }{ \medskip}
+
+\newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Example~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+
+\newenvironment{rema}[1]{
+\noindent \textbf{Remark~(#1)} \rmfamily }{ \medskip}
+
+\newenvironment{proo}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 
 
 
 \title{Functional Analysis}
-\author{陈辉}
+\author{Code2Hack}
 \date{}
 \begin{document}
 \maketitle
@@ -96,12 +117,12 @@ A subset M of a metric space is \textit{open} if it contains a ball about each o
 \end{defi}
 
 \begin{rema}
-\textbf{(Topological Space)}
-For the collection of all the open subsets of X called $\mathscr{T}$ :
+{Topological Space}
+For the collection of all the open subsets of X called $\mathcal{T}$ :
 \begin{itemize}
 \item (T1) $\emptyset \in \mathscr{T}, X \in \mathscr{T}$.
-\item (T2) The union of \textbf{any} members of $\mathscr{J}$ is a member of $\mathscr{J}$.
-\item (T3) The intersection of \textbf{finitely} many members of $\mathscr{J}$ is a member of it.
+\item (T2) The union of \textbf{any} members of $\mathscr{J}$ is a member of $\mathscr{T}$.
+\item (T3) The intersection of \textbf{finitely} many members of $\mathscr{T}$ is a member of it.
 \end{itemize}
 \end{rema}
 
@@ -110,10 +131,29 @@ For the collection of all the open subsets of X called $\mathscr{T}$ :
 For $X=(X,d)~and~Y=(Y,\tilde{d})$, $T: X \longrightarrow Y$ is continuous at point $x_0$ if for every $\epsilon >0$ there's a $\delta >0$ such that
 \end{defi}
 
-\begin{theo}
+\begin{theo} 
 {Continuous mapping}
 A mapping $T: X \longrightarrow Y$ is continuous iff \textbf{the inverse image of any open subset of Y is an open subset of X}.
 \end{theo}
 
+\begin{defi}{Dense set, separable space}
+        A subset M of a metric space X is \textit{dense} in X if
+        \begin{equation*}
+                \bar{M}=X
+        \end{equation*}
+        X is \textit{separable} if it has a \textbf{countable} subset which is dense in X.
+\end{defi}
+\\
+\textbf{Examples}
+\book{37}
+
+\subsection{Convergence, Cauchy Sequence, Completeness}
+\begin{defi}{Convergence of a sequence, limit}
+\end{defi}
+
+\begin{lemm}{Boundedness, limit}
+        (a) A convergent sequence in X is bounded and its limit is unique. \\
+        (b) If $x_n \rightarrow x$ and $y_n \rightarrow y$ in X, then $d(x_n, y_n) \rightarrow d(x,y)$
+\end{lemm}.
 \end{document}
 %\includepdf[link=true,pages=-,fitpaper]{./papers/<++>.pdf}

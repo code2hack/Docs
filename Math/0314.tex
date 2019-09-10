@@ -3,7 +3,10 @@
 \usepackage{amssymb}
 \usepackage{dsfont}
 \usepackage{unicode-math}
-\numberwithin{equation}{subsection}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
 
 \usepackage{pdfpages}
 \usepackage{verbatim}
@@ -22,7 +25,7 @@
  numberstyle=\footnotesize\color{darkgray},           
  commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
  stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
- showstringspaces=false,                              % 不显示字符串中的空格
+ showstringspaces=true,                              % 显示字符串中的空格
  language=c++,                                        % 设置语言
 }
 \hypersetup{
@@ -35,6 +38,9 @@
 \newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
 \newcommand{\citeext}[2]{\href[page=#2]{./references/#1.pdf}{(P#2)}}
 \newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+%--------Commands/Operators for math------%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 %--------Environments for math------------%
 \newcounter{topic}[subsection]
 \newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
@@ -50,7 +56,7 @@
 
 \newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
-\newenvironment{proof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\newenvironment{proo}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 \title{Overview of Reinforcement Learning}
 \author{陈辉}
 \date{}
@@ -59,39 +65,18 @@
 \tableofcontents
 \newpage
 
-\section{Playing Atari with Deep Reinforcement Learning}
-\subsection{Introduction}
-\subsection{Background}
-Basic denotes:
-\begin{align*}
-    \mathcal{E} &: \text{The environment.}\\
-    a_t &: \text{Actions at time t.}\\ 
-    x_t &: \text{Observations which are raw pixels.}\\
-    r_t &: \text{Rewards at time t.}\\
-\end{align*}
-Note that any rewards may depend on the whole prior sequence(or a long enough prior sequence). Thus we define:
-\begin{align*}
-        s_t &: = {x_1,a_1,\dots,a_{t-1},x_t}.\\
-\end{align*}
-And the future discounted return:
-\begin{equation*}
-        R_t = \sum_{t'=t}^T \gamma^{t'-t} r_{t'}
-\end{equation*}
-where T denotes the time-step at which the game terminates.\\
-Thus we have the optimal action-value function:
-\begin{equation*}
-        Q^*(s,a)= \max_{\pi} \mathds{E}_{s'\sim\mathcal{E}}R_t
-\end{equation*}
+
+
+
+
 
 
 
 
 
 \bibliographystyle{plain}
-%\bibliography{overview_RL}
+\bibliography{overview_RL}
 
-%\citeinclude{Playing_Atari_with_Deep_Reinforcement_Learning}
-%\citeinclude{Asynchronous_Methods_for_Deep_Reinforcement_Learning}
 \end{document}
 
 

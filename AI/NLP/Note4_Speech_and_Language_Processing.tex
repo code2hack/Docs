@@ -3,7 +3,10 @@
 \usepackage{amssymb}
 \usepackage{dsfont}
 \usepackage{unicode-math}
-\numberwithin{equation}{subsection}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
 
 \usepackage{pdfpages}
 \usepackage{verbatim}
@@ -22,7 +25,7 @@
  numberstyle=\footnotesize\color{darkgray},           
  commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
  stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
- showstringspaces=false,                              % 不显示字符串中的空格
+ showstringspaces=true,                              % 显示字符串中的空格
  language=c++,                                        % 设置语言
 }
 \hypersetup{
@@ -35,6 +38,10 @@
 \newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
 \newcommand{\citeext}[2]{\href[page=#2]{./references/#1.pdf}{(P#2)}}
 \newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+\newcommand{\book}[1]{\citeext{Speech_and_Language_Processing}{#1}}
+%--------Commands/Operators for math------%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 %--------Environments for math------------%
 \newcounter{topic}[subsection]
 \newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
@@ -50,48 +57,48 @@
 
 \newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
-\newenvironment{proof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
-\title{Overview of Reinforcement Learning}
-\author{陈辉}
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\title{Notes for \textit{Speech and Language Processing}}
+\author{Code2Hack}
 \date{}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
 
-\section{Playing Atari with Deep Reinforcement Learning}
-\subsection{Introduction}
-\subsection{Background}
-Basic denotes:
-\begin{align*}
-    \mathcal{E} &: \text{The environment.}\\
-    a_t &: \text{Actions at time t.}\\ 
-    x_t &: \text{Observations which are raw pixels.}\\
-    r_t &: \text{Rewards at time t.}\\
-\end{align*}
-Note that any rewards may depend on the whole prior sequence(or a long enough prior sequence). Thus we define:
-\begin{align*}
-        s_t &: = {x_1,a_1,\dots,a_{t-1},x_t}.\\
-\end{align*}
-And the future discounted return:
+
+\section{Introduction}
+\section{Regular Expressions etc.}
+\book{10}
+\subsection{Regular Expressions}
+\subsubsection{Basic Regular Expression Patterns}
+
+\begin{itemize}
+        \item brackets: e.g [wW] means w or W. [a-z] means a to z. [\^{}a-z] not a upper case letter. \textbf{Notice,} only when \^{} is the first character in brackets it negates the pattern.\\
+        \item ?: /colou?r/ = color or colour. The preceding character or nothing. \\
+
+        \item Kleene star: /[ab]*/= 0 or more a's or b's. \\
+        \item Kleene +: /[0-9]+/= a sequence of digits. \\
+        \item .: any single character. /.*/= any string\\
+        \item Anchors:\^{} start of a line. \$ = end. \textbackslash b = boundary.
+\end{itemize}
+\subsubsection{Disjunction, Grouping, Precedence}
+
+\section{N-Gram Language Models}
+\subsection{N-Grams}
+Here we denote $w_1^{n-1}$ as the sequence $w_1, w_2, \dots, w_{n-1}$
+\par
 \begin{equation*}
-        R_t = \sum_{t'=t}^T \gamma^{t'-t} r_{t'}
+        P(w_1^n) = \prod_{k=1}^n P(w_k | w_1^{k-1})
 \end{equation*}
-where T denotes the time-step at which the game terminates.\\
-Thus we have the optimal action-value function:
+For N-gram model which fufills N-1th-order Markov Property, 
 \begin{equation*}
-        Q^*(s,a)= \max_{\pi} \mathds{E}_{s'\sim\mathcal{E}}R_t
+        P(w_1^n) = \prod_{k=1}^n P(w_k | w_{k-N+1}^{k-1})
 \end{equation*}
 
-
-
-
-
-\bibliographystyle{plain}
+%\bibliographystyle{plain}
 %\bibliography{overview_RL}
 
-%\citeinclude{Playing_Atari_with_Deep_Reinforcement_Learning}
-%\citeinclude{Asynchronous_Methods_for_Deep_Reinforcement_Learning}
 \end{document}
 
 

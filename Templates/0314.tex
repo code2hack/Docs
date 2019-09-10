@@ -3,8 +3,10 @@
 \usepackage{amssymb}
 \usepackage{dsfont}
 \usepackage{unicode-math}
-\usepackage{xcolor}
-\numberwithin{equation}{subsection}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
 
 \usepackage{pdfpages}
 \usepackage{verbatim}
@@ -23,7 +25,7 @@
  numberstyle=\footnotesize\color{darkgray},           
  commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
  stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
- showstringspaces=false,                              % 不显示字符串中的空格
+ showstringspaces=true,                              % 显示字符串中的空格
  language=c++,                                        % 设置语言
 }
 \hypersetup{
@@ -36,8 +38,9 @@
 \newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
 \newcommand{\citeext}[2]{\href[page=#2]{../references/#1.pdf}{(P#2)}}
 \newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
-%===========Textbooks===================%
-\newcommand{\textbook}[1]{\citeext{Durrett_Probability_theory_and_examples}{#1}}
+%--------Commands/Operators for math------%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 %--------Environments for math------------%
 \newcounter{topic}[subsection]
 \newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
@@ -53,7 +56,7 @@
 
 \newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
    \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
-\newenvironment{proof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
+\newenvironment{proo}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 \title{Overview of Reinforcement Learning}
 \author{陈辉}
 \date{}
@@ -61,52 +64,20 @@
 \maketitle
 \tableofcontents
 \newpage
-\section{Measure Theory}
-\subsection{Probability Spaces}
-%\begin{defi}
-        A \textbf{Probability space} is a triple $(\omega, \mathcal{F}, P)$. Where $\mathcal{F}$ is a $\sigma$-\textbf{field}, that is, a nonempty collection of subsets of $\omega$ that satisfy:\\
-        (i) if $A \in \mathcal{F}$ then $A^c \in \mathcal{F}$\\
-        (ii) if $A_i \in \mathcal{F}$ is a countable sequence of sets then $\cup_i A_i \in \mathcal{F}$\\
-        Without P, $(\omega, \mathcal{F})$ is a \textbf{measurable space}, that we can define a nonnegative countably additive set function $\mu : \mathcal{F} \rightarrow R$ with:\\
-        (i) $\mu(A) \geq \mu(\emptyset) = 0$ for all $A \in \mathcal{F}$.\\
-        (ii) if $A_i \in \mathcal{F}$ is a countable sequence of disjiont sets, then
-        \begin{equation*}
-                \mu(\cup_i A_i) = \sum_i \mu(A_i)
-        \end{equation*}
-%\end{defi}
-\begin{theo}
-        \\
-        (i) Monotonicity.\\
-        If $A \subset B$ then $\mu(A) \leq \mu(B)$.\\
-        (ii) Subadditivity.\\
-        If $A \subset \cup_{m=1}^\infty A_m \text{then} \mu(A) \leq \sum_{m=1}^\infty \mu(A_M)$.\\
-        (iii) Continuity from below.\\
-        If $A_i \uparrow A $. (i.e. $A_i \subset A_2 \subset \dots \text{and} \cup_i A_i = A$), then $\mu(A_i) \uparrow \mu(A)$.\\
-        (iv) Continuity from above.
-\end{theo}
-\subsection{Distributions}
-\textcolor{red}{\textbf{random variable X} is a real-valued function on $\omega$ if for every Borel set $B \subset R$ we have $X^{-1}(B)=\left\{\omega:X(\omega) \in B \right\} \in \mathcal{F}$}.\\
-For a random variable X, its \textbf{distribution function}:$F(x) = P(X \leq x)$.
-\begin{theo}
-\end{theo}
-        
-\textbook{21}
-\setcounter{section}{5}
-\section{Markov Chains}
 
-\subsection{Definitions}
-\begin{align*}
-        P(s'|s,o) &= \frac{P(s')P(s,o|s')}{P(s,o)}\\
-                  &= \frac{P(s',s,o)}{P(s,o)}\\
-                  &= \frac{P(o|s,s')P(s,s')}{P(s,o)}\\
-                  &= \frac{P(o|s,s')P(s'|s)}{P(o|s)}\\
-\end{align*}
+
+
+
+
+
+
 
 
 
 \bibliographystyle{plain}
-%\bibliography{overview_RL}
+\bibliography{overview_RL}
 
-%\citeinclude{Playing_Atari_with_Deep_Reinforcement_Learning}
-%\citeinclude{Asynchronous_Methods_for_Deep_Reinforcement_Learning}
 \end{document}
+
+
+%\includepdf[link=true,pages=-,fitpaper,angle=-90]{./papers/<++>.pdf}

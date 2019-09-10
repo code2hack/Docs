@@ -1,9 +1,20 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{unicode-math}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
 \usepackage{pdfpages}
 \usepackage{verbatim}
 \usepackage{xeCJK}
 \usepackage{hyperref}
+%\usepackage{apacite}
+\usepackage{natbib}
+\usepackage{grffile}
 \usepackage{listings}
 \lstset{
  columns=fixed,       
@@ -14,12 +25,39 @@
  numberstyle=\footnotesize\color{darkgray},           
  commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
  stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
- showstringspaces=false,                              % 不显示字符串中的空格
+ showstringspaces=true,                              % 显示字符串中的空格
  language=c++,                                        % 设置语言
 }
-\newcommand{\paper}[2]{\hyperlink{./papers/#1.pdf.#2}{(P#2)}}
-\newcommand{\book}[1]{\href[page=#1]{./books/TLPI.pdf}{(P#1)}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+%--------Commands for local pdf reference------%
+\newcommand{\citeint}[2]{\cite{#1}\hyperlink{./references/#1.pdf.#2}{(P#2)}}
+\newcommand{\citeext}[2]{\href[page=#2]{../references/#1.pdf}{(P#2)}}
+\newcommand{\citeinclude}[1]{\includepdf[link=true,pages=-,fitpaper=true]{./references/#1.pdf}}
+\newcommand{\book}[1]{\citeext{TLPI}{#1}}
+%--------Commands/Operators for math------%
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+%--------Environments for math------------%
+\newcounter{topic}[subsection]
+\newenvironment{defi}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Definition~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{theo}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Theorem~\thesubsection.\thetopic~} \rmfamily }{\medskip}
+\newenvironment{coro}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Corollary~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{lemm}{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Lemma~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{exam}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Example~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
 
+\newenvironment{rema}[1]{\refstepcounter{topic}\label{\thesubsection.\thetopic}\par\medskip
+   \noindent \textbf{Remark~\thesubsection.\thetopic~} \rmfamily }{ \medskip}
+\newenvironment{prof}{\par\medskip \noindent \textit{Proof.}~\rmfamily}{\medskip}
 
 \title{The Linux Programming Interfaces}
 \author{陈辉}
@@ -256,7 +294,30 @@ Two main steps to utilize shared library:
 \subsubsection{The Shared Library Soname}
 \book{884}
 
+\setcounter{section}{5}
+\section{Processes}
+\subsection{Processes and Programs}
+\href{https://en.wikipedia.org/wiki/Executable\_and\_Linkable\_Format}{Executable and Linking Format}
+\subsection{Process ID and Parent Process ID}
+\subsection{Memory Layout of a Process}
+\textit{segments}:\\
+The memory allocated to each process. Including:
+\begin{itemize}
+        \item \textit{text segment}: Machine-language instructions. Read-only, shared. \\
+        \item \textit{Initialized data segment}: global and static variables explicitly initialized. \\
+        \item \textit{Uninitialized data segment}. \\
+        \item \textit{Stack}. One stack frame for each current called function. \\
+        \item \textit{Heap}: dynamically allocated data.
+\end{itemize}
+\subsection{Virtual Memory Management}
+Figure: Typical memory layout of a process.\book{163}\\
+\textcolor{green}{\textit{pages}}:\\
+A virtual memory scheme splits the memory used by each program into small fixed-size units called pages. \\
+\textit{page table}: \book{164} \\
+Processes can use \textit{shmget()} and \textit{mmap()} to explicitly request sharing of memory regions with other processes, for the purpose of \textcolor{red}{interprocess communication}. \\
 
+\subsection{The Stack and Stack Frames}
+\href{http://www.cs.uwm.edu/classes/cs315/Bacon/Lecture/HTML/ch10s07.html}{See this lecture} \\
 
 
 \end{document}
