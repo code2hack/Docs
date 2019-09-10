@@ -74,7 +74,7 @@ email address}
 
 \section{Introduction}
 Distributed file systems such as HDFS\cite{HDFS}, GlusterFS[], Ceph\cite{Ceph}, Lustre[] \textcolor{red}{etc}. have been widely deployed as back-end storage systems for parallel/distributed applications.
-with the data scale continuously increased, i/o access latency between computing nodes and storage servers has become one of the severest bottlenecks in this big data era.
+with the data scale continuously increased, I/O access latency between computing nodes and storage servers has become one of the severest bottlenecks in this big data era.
 In order to narrow this performance gap, data caching/prefetching in file systems is one of the most well-known optimization techniques.
 Caches(burst buffers?) with non-volatile memories(NVMs) and solid state drives(SSDs) are placed at different levels of the I/O stack to hide network and disk latency.
 
@@ -103,9 +103,23 @@ The main contributions of this paper can be summerized as follow.
 \end{itemize}
 
 \section{Related Work}
-N-gram staging: high level works on data libraries
-C-miner: low level on block-rate optimization.
-meta data access optimizations.
+The I/O subsystem is becoming the bottleneck of high performance distributed systems, 
+especially there are many communication intensive applications in them \cite{Related_Network_I/O_load_based}.
+In order to achieve potential performance enhancements of storage systems, 
+a variety of I/O history analysis-based I/O optimization mechanisms have been proposed previously 
+\cite{Related_Multi_Layer_Event_Trace_Analysis} \cite{Related_Towards_an_I/O_tracing_framework_taxonomy} \cite{Related_DiskSeen} \cite{A_Prefetching_Scheme_Related} \cite{Scalable_IO_Tracing_Related}.
+However, existing approaches including aforementioned ones have mostly focused on classifying I/O access patterns by analyzing either the history of applications’ I/O requests
+\cite{Parallel_IO_Prefetching_Related} \cite{Learning_To_Classify_Related}
+or the track of block access events \cite{Related_DiskSeen} \cite{A_Prefetching_Scheme_Related}, 
+so that the analyzed results can be used for directing I/O optimization strategies, such as data prefetching.
+The mechanism of data prefetching focuses on how to forecast future possible read requests, and thus, 
+the accuracy of request prediction is critical to the effectiveness and applicability of data prefetching.
+
+There is a wide range of sophisticated approaches to fulﬁll data prefetching, 
+which utilize hidden Markov models, 
+neural networks or other predictive algorithms to forecast I/O operations by analyzing I/O access patterns of the application 
+\cite{Parallel_IO_Prefetching_Related} \cite{IO_Acceleration_with_Related} \cite{An_Automatic_Prefetching_Related} \cite{Reducing_File_System_Latency_Related} \cite{Automatic_ARIMA_Related}.
+In summary, these mechanisms employ specific hard-coded algorithms to predict the application's future I/O access requests based on past I/O tracks for prefetching data.
 
 \section{Background and Motivation}
 \subsection{Introduction to GlusterFS}
@@ -260,7 +274,7 @@ To evaluate the performance of our model,
 %\subsection{\textcolor{red}{edit}{Evaluation for dynamically file classification}}
 \section{Conclusion}
 In this paper, we systematically discuss the similarity between natural language processing and posix file systems,
-and propose a new approch to represent posix file/direcory names with Skip-gram algorithm. 
+and propose a new approach to represent posix file/direcory names with Skip-gram algorithm. 
 With this embedding mechanism, we map the file/directory names into a high dimension vector space, 
 where the relation between files can be dipicted by dot production of these two vectors.  
 
