@@ -37,54 +37,54 @@ eqzhou@nudt.edu.cn}
     To narrow the increasing gap between computing and I/O performance, several optimization techniques were adopted, 
     such as data prefetching and data layout optimization. However, the effectiveness of these optimization processes heavily 
     depends on the understanding of the I/O behavior. Traditionally, spatial locality and temporal locality
-    are mainly considered for data prefetching and scheduling policy. Whereas for most real world workloads, the file access pattern 
+    are mainly considered for data prefetching and scheduling policy. Whereas for most real-world workloads, the file access pattern 
     is hard to capture. 
 
-    For the goal of deeply and intelligently understanding the I/O access pattern of modern applications, and efficiently optimizing performance of current file systems,
-    we propose a new mechanism to embed file names to vectors, and train a gated recurrent neural network to provide policies for file prefeching and cache replacing.
+    For the goal of deeply and intelligently understanding the I/O access pattern of modern applications, and efficiently optimizing the performance of current file systems,
+    we propose a new mechanism to embed file names to vectors and train a gated recurrent neural network to provide policies for file prefeching and cache replacing.
 \end{abstract}
 
 \begin{IEEEkeywords}
-    \textit{Distributed File System; File Prefetching; Word Embedding; RNN}
+    Distributed File System, File Prefetching, Word Embedding, RNN
 
 \end{IEEEkeywords}
 
 \section{Introduction}
 Distributed file systems such as HDFS\cite{HDFS}, GlusterFS\cite{GlusterFS}, Ceph\cite{Ceph}, Lustre\cite{Lustre}, etc., have been widely deployed as back-end storage systems for parallel/distributed applications.
 with the data scale continuously increased, I/O access latency between computing nodes and storage servers has become one of the severest bottlenecks in this big data era.
-In order to narrow this performance gap, data caching/prefetching in file systems is one of the most well-known optimization techniques.
-Caches with high throughput and low latency devices like non-volatile memories(NVMs) and solid state drives(SSDs) are placed at different levels of the I/O stack to hide network and disk latency.
+To narrow this performance gap, data caching/prefetching in file systems is one of the most well-known optimization techniques.
+Caches with high throughput and low latency devices like non-volatile memories(NVMs) and solid-state drives(SSDs) are placed at different levels of the I/O stack to hide network and disk latency.
 
-For purpose of caching data from lower storage in predictable manner, access pattern detection is essential.
+To cache data from lower storage in a predictable manner, access pattern detection is essential.
 Traditionally, spatial locality and temporal locality are most generally considered facts. 
-\textit{Readahead} is a basic mechanism implemented by most file systems\cite{WhyDoes} including linux kernel, which prefeches constant size of data from a opened file to the cache. 
-For workloads excuting sequential read, this approach benefits a lot due to the simple and definite pattern.
-Unfortunately, many applications especially sientific ones usually do not access files sequentially.
+\textit{Readahead} is a basic mechanism implemented by most file systems\cite{WhyDoes} including Linux kernel, which prefetches constant size of data from an opened file to the cache. 
+For workloads executing sequential read, this approach benefits a lot due to the simple and definite pattern.
+Unfortunately, many applications especially scientific ones usually do not access files sequentially.
 
-The main contributions of this paper can be summerized as follow.
+The main contributions of this paper can be summarized as follow.
 \begin{itemize}
-    \item We propose an approach to embed the names of files or directories with Skipgram algorithm, 
+    \item We propose an approach to embed the names of files or directories with Skipgram algorithm,
     mapping file/directory names to vectors, thus providing a quantitative way to analyze relations among files and directories.
-    \item For purpose of collecting I/O access history, we implement a trace translator into GlusterFS to monitor and trace specific I/O requests.
+    \item To collect I/O access history, we implement a trace translator into GlusterFS to monitor and trace specific I/O requests.
     \item Base on the embedding mechanism mentioned above, we build a gated recurrent neural network to capture I/O access pattern and encode it with hidden states of the GRU.
-    We combine the hidden states with file vectors to build a file classifier, which dynamically decide whether a file should be cached or purged from the cache.
+    We combine the hidden states with file vectors to build a file classifier, which dynamically decides whether a file should be cached or purged from the cache.
 
 \end{itemize}
 
 \section{Related Work}
-The I/O subsystem is becoming the bottleneck of high performance distributed systems, 
-especially there are many communication intensive applications in them \cite{Related_Network_I/O_load_based}.
+The I/O subsystem is becoming the bottleneck of high-performance distributed systems, 
+especially there are many communication-intensive applications in them \cite{Related_Network_I/O_load_based}.
 In order to achieve potential performance enhancements of storage systems, 
 a variety of I/O history analysis-based I/O optimization mechanisms have been proposed previously 
 \cite{Related_Multi_Layer_Event_Trace_Analysis} \cite{Related_Towards_an_I/O_tracing_framework_taxonomy} \cite{Related_DiskSeen} \cite{A_Prefetching_Scheme_Related} \cite{Scalable_IO_Tracing_Related}.
-However, existing approaches including aforementioned ones have mostly focused on classifying I/O access patterns by analyzing either the history of applications’ I/O requests
+However, existing approaches including the aforementioned ones have mostly focused on classifying I/O access patterns by analyzing either the history of applications’ I/O requests
 \cite{Parallel_IO_Prefetching_Related} \cite{Learning_To_Classify_Related}
 or the track of block access events \cite{Related_DiskSeen} \cite{A_Prefetching_Scheme_Related}, 
-so that the analyzed results can be used for directing I/O optimization strategies, such as data prefetching.
+so that the analyzed results can be used for direct I/O optimization strategies, such as data prefetching.
 The mechanism of data prefetching focuses on how to forecast future possible read requests, and thus, 
 the accuracy of request prediction is critical to the effectiveness and applicability of data prefetching.
 
-There is a wide range of sophisticated approaches to fulﬁll data prefetching, 
+There is a wide range of sophisticated approaches to fulfill data prefetching, 
 which utilize hidden Markov models, 
 neural networks or other predictive algorithms to forecast I/O operations by analyzing I/O access patterns of the application 
 \cite{Parallel_IO_Prefetching_Related} \cite{IO_Acceleration_with_Related} \cite{An_Automatic_Prefetching_Related} \cite{Reducing_File_System_Latency_Related} \cite{Automatic_ARIMA_Related}.
@@ -92,14 +92,14 @@ In summary, these mechanisms employ specific hard-coded algorithms to predict th
 
 \section{Background and Motivation}
 \subsection{Introduction to GlusterFS}
-GlusterFS is a scalable distributed filesystem which is suitable for data-intensive workloads such as cloud storage and high performance computing.
+GlusterFS is a scalable distributed filesystem which is suitable for data-intensive workloads such as cloud storage and high-performance computing.
 It aggregates various storage servers over Ethernet or Infiniband RDMA interconnect into one large parallel network file system.
 Servers are typically deployed as storage bricks.
 
 
-Since version 3.7, the newly implemented feature \textit{tiring} enables different sotrage types to be used by the same logical volume.
+Since version 3.7, the newly implemented feature \textit{tiring} enables different storage types to be used by the same logical volume.
 As Fig.\ref{fig:tiering} shows, the two types of bricks are classified as \textit{cold} and \textit{hot}. The hot group acts as a cache for the cold group. 
-With fine-tuned prefeching and cache replacing policy, large propotion of I/O requests are forwarded to \textit{hot} bricks, thus significantly decreasing access latency.
+With fine-tuned prefeching and cache replacing policy, a large proportion of I/O requests are forwarded to the \textit{hot} bricks, thus significantly decreasing access latency.
 In this case, we can reframe caching/prefeching optimization tasks to binary classification problems,
 the objective of which is to dynamically decide whether a file is \textit{hot} or \textit{cold}.
 
@@ -115,7 +115,7 @@ The concept word embedding is a set of language models for distributed represent
 aiming at mapping natural words to real number vectors based on context provided by specific corpora.
 These mapping mechanisms include neural networks, dimensionality reduction on the word co-occurrence matrix, probabilistic methods, etc.
 
-Among the mechanisms metioned above, the Skip-gram model is an efﬁcient method for learning high-quality distributed vector representations that capture a large number of precise syntactic and semantic word relationships.
+Among the mechanisms mentioned above, the Skip-gram model is an efficient method for learning high-quality distributed vector representations that capture a large number of precise syntactic and semantic word relationships.
 
 %Given a word vocabulary of size $W$, where a word is identified by $w \in {1,\dots,W}$, 
 %and a corpus consists of a sequence of words $w_1, \dots, w_T$, the objective of skip-gram algorithm is to maximize the following log probability:
@@ -132,9 +132,9 @@ Among the mechanisms metioned above, the Skip-gram model is an efﬁcient method
 %To estimate ...
 
 \subsection{Gated Recurrent Neural Networks}
-RNNs(\textit{Recurrent Neural Networks}) have been widely utilized and shown exellent performance in multiple NLP tasks,
-such as speech recognition, machine translation and text emotion classification etc.
-The RNN is an extension of a conventional feedforward neural network, which is able to process a variable-length sequence input.
+RNNs(\textit{Recurrent Neural Networks}) have been widely utilized and shown excellent performance in multiple NLP tasks,
+such as speech recognition, machine translation, and text emotion classification, etc.
+The RNN is an extension of a conventional feedforward neural network, which can process a variable-length sequence input.
 Given a sequence input $x = (x_1, x_2, \dots, x_T)$, the RNN updates its recurrent hidden state $h_t$ by
 \begin{equation}
     \mathbf{h_t}=
@@ -151,13 +151,13 @@ Where $\phi$ is a nonlinear function calculating current hidden state $h_t$ base
 \caption{Gated recurrent unit}
 \end{figure}
 The GRU(gated recurrent unit)\cite{GRU} is a gating mechanism in RNNs, 
-which is like a LSTM(long short-term memory)\cite{LSTM} with forget gate but has fewer parameters.
+which is like an LSTM(Long Short-Term Memory)\cite{LSTM} with forget gate but has fewer parameters.
 
 
 \section{Design}
 \subsection{Path Embedding Model}
-Since words embedding mechanisms have significantly promoted the performance of plenty of NLP tasks, 
-we assume that these methodologies are suitable in analytics and optimizations for posix file systems as well.
+Since word embedding mechanisms have significantly promoted the performance of plenty of NLP tasks, 
+we assume that these methodologies are suitable in analytics and optimizations for POSIX file systems as well.
 \textit{e.g.}, given paths like \textit{/a/b/c/}, \textit{/a/b/d}, we can claim that \textit{a} and \textit{b},
 \textit{b} and \textit{c} are parent-child pairs, while \textit{c} and \textit{d} are a pair of brothers with the same parent \textit{b}.
 Or, intuitively, they are logically close to each other in this directory tree. 
@@ -165,27 +165,27 @@ This basic relation is analogous to 2-Grams model in natural language models.
 
 Formally, given a directory tree accessed by a specific workload such as compiling, 
 it is assumed that the naming conventions and directory structure are regularly formed by producers or users.
-Thus it is possible to form a vocabulary and train an embedding model to represent each directory/file name as a vector.
+Thus it is possible to form vocabulary and train an embedding model to represent each filename as a vector.
 
-To generate corpora for training purpose,
-we recursively traverse the target directory from root entry and print the paths into a txt file line by line.
-After that, the Skip-gram algorithm is invoked to train a embedding model, 
-which finally provides a vocabulary for all the occured directory/file names and a table consists of vectors for these names.
+To generate corpora for training purposes,
+we recursively traverse the target directory from root entry and print the paths into a text file line by line.
+After that, the Skip-gram algorithm is invoked to train an embedding model, 
+which finally provides a vocabulary for all the occurred directory/file names and a table consists of vectors for these names.
 
 
 \subsection{Access Pattern Analytics with Gated Recurrent Neural Network}
 \subsubsection{Data Pre-processing}
 To collect file access histories, we insert a trace translator into GlusterFS.
-So far, we mainly focus on file \textit{open} operation in order to detect when, how and what files does the workload start to access during its lifetime,
-attemtpting to reveal its underlying access patterns beyond basic locality. 
+So far, we mainly focus on file \textit{open} operation to detect when, how and what files does the workload starts to access during its lifetime,
+attempting to reveal its underlying access patterns beyond the basic locality. 
 The components of the \textit{path} in each \textit{open} request are transformed and added up to form a vector.
-e.g., given $i$th accessed path named \textit{/foo/bar/file}, the three components are respectively transformed to three vectors: $\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\}$,
+e.g., given $i$th accessed path named \textit{/foo/bar/file}, the three components are respectively transformed into three vectors: $\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\}$,
 and summed up to form a vector $\mathbf{x}_i = \mathbf{v}_1 + \mathbf{v}_2 + \mathbf{v}_3$.
 Finally, a sequence of vectors $\mathbf{x}=(\mathbf{x_1}, \dots, \mathbf{x_T})$ representing access history of size $T$ are generated.
 
 \subsubsection{GRU-based Model Building}
 In our design, we utilize a single-layer GRU to calculate and update the hidden state, which implicitly represents the access pattern of the target workloads. 
-Given dataset $\mathbf{x} = (\mathbf{x}_1,\dots,\mathbf{x}_T)$ representing a sequence of file access history excuted by the target workload, 
+Given dataset $\mathbf{x} = (\mathbf{x}_1,\dots,\mathbf{x}_T)$ representing a sequence of file access history executed by the target workload, 
 we take these vectors as input sequence for the GRU and train the model. 
 
 At time $t$, the activation $h_t^{(j)}$, which denotes the $j$th element of the hidden state $\mathbf{h}_t$, is a linear interpolation between the previous activation $h_{t-1}^{(j)}$ and the candidate activation $\tilde{h}_t^{(j)}$:
@@ -196,17 +196,17 @@ Where $z_t$ is denoted as an \textit{update gate}, calculated by a sigmoid funct
 \begin{equation}
 z_t^{(j)} = \sigma(W_z \mathbf{x}_t + U_z \mathbf{h}_{t-1})^{(j)}
 \end{equation}
-The candidate acitivation $\tilde{h}_t^{(j)}$ is computed by:
+The candidate activation $\tilde{h}_t^{(j)}$ is computed by:
 \begin{equation}
     \tilde{h}_t^{(j)} = \tanh(W \mathbf{x}_t + U (\mathbf{r}_t \odot \mathbf{h}_{t-1}))^{(j)}
 \end{equation}
-Where $\mathbf{r}_t$ are \textit{reset gates} and $\odot$ is a pointwise multiplication(Hadarmard product).
+Where $\mathbf{r}_t$ are \textit{reset gates} and $\odot$ is a pointwise multiplication(Hadamard product).
 The reset gate is calculated by
 \begin{equation}
     r_t^{(j)} = \sigma(W_r \mathbf{x}_t + \mathbf{U}_r \mathbf{h}_{t-1})^{(j)}
 \end{equation}
-For purpose of discriminating files between \textit{hot} and \textit{cold}, 
-our goal is to train the GRU to provide appropriate hidden states for classification. 
+To discriminate files between \textit{hot} and \textit{cold}, 
+our goal is to train the GRU to provide hidden states for classification. 
 We denote $N$ as the approximation of the number of files fit in the cache,
 thus at time $t$, the following $N$ files(vectors) are labeled as \textit{hot}, i.e., positive samples, 
 while the others are labeled as \textit{cold}(negative).
@@ -224,23 +224,23 @@ Thus we obtain the loss function for training
     arg\,max L(\theta) = \sum_{i=1}^N \log \sigma(\mathbf{x}^\top_t \mathbf{h}_t)
 \end{equation}
 Where the parameter $\theta = \{W_z, U_z, W, U, W_r, U_r\}$.
-We train this GRU with BPTT(backpropagation through time).
+We train this GRU with BPTT(Backpropagation Through Time).
 
 
 
 \section{Evaluation}
 \subsection{Experiment and Parameter Settings}
 We use a 4 node cluster to build a distributed file system based on GlusterFS. 
-Each node is deployed on a CentOS7 Server virtual machine on the different physical machines connected by Ethernet, 
-and each virtual machine has one CPU, 1G memory and 20G RAM. Each node is equiped with one hard disk as \textit{cold} brick,
-and an SSD driver with volume of 40 GB deployed as the \textit{hot} brick.
+Each node is deployed on a CentOS7 Server virtual machine on the different physical machines connected by Ethernet
+and each virtual machine has one CPU, 1G memory and 20G RAM. Each node is equipped with a hard disk as \textit{cold} brick,
+and an SSD with a volume of 40 GB deployed as the \textit{hot} brick.
 
-We choose compiling workloads as the target, and collect 20 different repositories from Github.
+We choose compiling workloads as the target and collect 20 different repositories from Github.
 %including \textcolor{red}{edit} files and occupying volume of \textcolor{red}{edit} gigabytes in total.
 We split these repositories into two groups, 10 arbitrary repositories for training and the others for testing. 
 
-To evlatuate the performance of our model, we adjust the context window size $N$ for testing. 
-Whereas another hyper parameter, the dimension of the embedded vectors is fixed to be 16. 
+To evaluate the performance of our model, we adjust the context window size $N$ for testing. 
+Whereas another hyperparameter, the dimension of the embedded vectors is fixed to be 16. 
 \subsection{Results for Hit Rate and Access Latency Testing}
 
     
@@ -284,8 +284,8 @@ Whereas another hyper parameter, the dimension of the embedded vectors is fixed 
     \label{table:result}
 \end{table}
 As shown in Table. \ref{table:result}, where the first line of data refers to the baseline, i.e., the model and the prefeching mechanism do not work.
-We can conclude that our mechanism bring benifits to the file system compared to no-prefeching state.
-From Fig.~\ref{fig:hit_rate} and Fig.~\ref{fig:latency}, we can clearly observe that this profit brought by our mechanism is limited, 
+We can conclude that our mechanism brings benifits to the file system compared to the non-prefeching state.
+From Fig.~\ref{fig:hit_rate} and Fig.~\ref{fig:latency}, we can observe that this profit brought by our mechanism is limited, 
 due to the increasing tradeoff when the context window is enlarging.
 \begin{figure}
 \centering
@@ -307,19 +307,19 @@ due to the increasing tradeoff when the context window is enlarging.
 
 %\subsection{\textcolor{red}{edit}{Evaluation for dynamically file classification}}
 \section{Conclusion}
-In this paper, we systematically discuss the similarity between natural language processing and posix file systems,
-and propose a new approach to represent posix file/direcory names with Skip-gram algorithm. 
+In this paper, we systematically discuss the similarity between natural language processing and POSIX file systems,
+and propose a new approach to represent POSIX file/directory names with the Skip-gram algorithm. 
 With this embedding mechanism, we map the file/directory names into a high dimension vector space, 
-where the relation between files can be dipicted by dot production of these two vectors.  
+where the relation between files can be depicted by the dot production of these two vectors.  
 
 Based on this embedding mechanism, we exploit a single-layer GRNN(Gated Recurrent Neural Network) taking file access history as sequence input.
-With well trained GRU, we are able to encode the access pattern to the hidden state and dynamically decide whether a file is \textit{hot} or \textit{cold},
+With well trained GRU, we can encode the access pattern to the hidden state and dynamically decide whether a file is \textit{hot} or \textit{cold},
 thus providing hints for caching/prefeching and cache replacing policies.
 
-There are several works to accomplish in the future. First, the size of context window should be adaptive to the volume of the cache, 
+There are several works to accomplish in the future. First, the size of the context window should be adaptive to the volume of the cache, 
 as well as the CPU resources of the storage nodes.
-Also, our work should be scaled to serve more real world workloads rather than single process applications like compiling, 
-especially for scientific workloads in exscale parallel computing and cloud computing circumstances.
+Also, our work should be scaled to serve more real-world workloads rather than single-process applications like compiling, 
+especially for scientific workloads in exascale parallel computing and cloud computing circumstances.
 \bibliographystyle{plain}
 \bibliography{paper}
 
