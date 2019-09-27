@@ -17,7 +17,7 @@ visit [bing](bing.com) to check more details.
 
 ## ***Images***
 ![fig](images/example.png?raw=true)
-
+![this](https://github.com/code2hack/docs/blob/master/AI/torch/images/example.png)
 ## ***Code Blocks***
     #include <iostream.h>  
     int main()  
