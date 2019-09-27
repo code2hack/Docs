@@ -16,7 +16,7 @@ visit [bing](bing.com) to check more details.
 * who
 
 ## ***Images***
-![fig](AI/torch/example.png)
+![fig](example.png?raw=true)
 
 ## ***Code Blocks***
     #include <iostream.h>  
