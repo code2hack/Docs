@@ -16,7 +16,7 @@ visit [bing](bing.com) to check more details.
 * who
 
 ## ***Images***
-![fig](../../ControlFlow.png)
+![fig](ControlFLow.png)
 
 ## ***Code Blocks***
     #include <iostream.h>  
