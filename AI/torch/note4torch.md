@@ -1,27 +1,8 @@
-# ***Math***
-$$
-f(x) = \sum_{i=1}^n\int_{-\infty}^\infty x^{q_i}dx
-$$
-## *Links* 
-[a link]:[## Images]
-visit [bing](bing.com) to check more details.
+# **Notes for Pytorch**
 
-## ***Lists***
-* when
-    * todaty
-    * tomorrow
-    * next week
-* what
-* how
-* who
+## Class *dataloader*
+[Documentation](https://pytorch.org/docs/stable/_modules/torch/utils/data/dataloader.html)
 
-## ***Images***
-![fig](images/example.png?raw=true)
-![this](https://github.com/code2hack/docs/blob/master/AI/torch/images/example.png)
-## ***Code Blocks***
-    #include <iostream.h>  
-    int main()  
-    {  
-        if(true)  
-            do sth;
-    }
+> The *dataloader* combines a ***dataset*** and a ***sampler***, and provides an ***iterable*** over the dataset.
+
+### Dataset
