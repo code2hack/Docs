@@ -1,6 +1,6 @@
 # ***Math***
 $$
-f(x) = \int_{-\infty}^\infty xdx
+f(x) = \sum_{i=1}^n\int_{-\infty}^\infty x^{q_i}dx
 $$
 ## *Links* 
 [a link]:[## Images]
