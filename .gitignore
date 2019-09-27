@@ -3,4 +3,7 @@
 !*.tex
 !*.bib
 !*.md
+!*.png
+!*.jpg
+!*.gif
 !.gitignore
