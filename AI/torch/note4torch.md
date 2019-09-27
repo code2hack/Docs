@@ -16,7 +16,7 @@ visit [bing](bing.com) to check more details.
 * who
 
 ## ***Images***
-![fig](./ControlFLow.png)
+![fig](docs/AI/torch/ControlFLow.png)
 
 ## ***Code Blocks***
     #include <iostream.h>  
