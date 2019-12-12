@@ -1,8 +1,10 @@
 # **Notes for Pytorch**
 
-## Class *dataloader*
+## *Dataloader*
 [Documentation](https://pytorch.org/docs/stable/_modules/torch/utils/data/dataloader.html)
 
-> The *dataloader* combines a [***dataset***](###Dataset) and a ***sampler***, and provides an ***iterable*** over the dataset.
+> The class *dataloader* combines a [***dataset***](###Dataset) and a [***sampler***](###Sampler), and provides an [***iterable***](###Iterable) over the dataset.
 
 ### Dataset
+### Sampler
+### Iterable

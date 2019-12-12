@@ -1,8 +1,7 @@
 *
 !/**/
 !*.tex
+!*.sty
 !*.bib
 !*.md
-!*.jpg
-!*.gif
 !.gitignore
